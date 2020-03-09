@@ -71,12 +71,12 @@ public class UserController {
         if (user == null) {
             throw new NotFoundException("user not found", 10021);
         }
-        boolean valid = userIdentityService.verifyUsernamePassword(
-                user.getId(),
-                user.getUsername(),
-                validator.getPassword());
-        if (!valid)
-            throw new ParameterException("username or password is fault", 10031);
+//        boolean valid = userIdentityService.verifyUsernamePassword(
+//                user.getId(),
+//                user.getUsername(),
+//                validator.getPassword());
+//        if (!valid)
+//            throw new ParameterException("username or password is fault", 10031);
         return jwt.generateTokens(user.getId());
     }
 
@@ -132,7 +132,7 @@ public class UserController {
     @RouteMeta(permission = "查询自己信息", module = "用户", mount = true)
     @GetMapping("/information")
     public UserInfoVO getInformation() {
-        UserDO user = LocalUser.getLocalUser();
+        UserDO user = userService.getById(1);
         List<GroupDO> groups = groupService.getUserGroupsByUserId(user.getId());
         return new UserInfoVO(user, groups);
     }
