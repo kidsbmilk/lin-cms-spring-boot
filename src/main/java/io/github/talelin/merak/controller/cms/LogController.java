@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.Date;
 
 @RestController
@@ -31,13 +32,13 @@ public class LogController {
     public PageResponseVO getLogs(
             @RequestParam(name = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date start,
             @RequestParam(name = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end,
-            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "name", required = false) String username,
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{count}") Long count,
             @RequestParam(name = "page", required = false, defaultValue = "0")
             @Min(value = 0, message = "{page}") Long page) {
-        IPage<LogDO> iPage = logService.getLogPage(page, count, name, start, end);
-        return PageResponseVO.genPageResult(iPage.getTotal(), iPage.getRecords(), page, count);
+//        IPage<LogDO> iPage = logService.getLogPage(page, count, username, start, end);
+        return PageResponseVO.genPageResult(0, new ArrayList(), page, count);
     }
 
     @GetMapping("/search")
